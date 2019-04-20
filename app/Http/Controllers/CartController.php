@@ -36,13 +36,13 @@ class CartController extends Controller
 
     //购物车列表
     public function cartList(){
-        $cartInfo=Cart::where('uid',Auth::id())->orderBy('id','desc')->get()->toArray();
+        $cartInfo=Cart::where(['uid'=>Auth::id(),])->orderBy('id','desc')->get()->toArray();
         if($cartInfo){
             $total_price = 0;
             foreach($cartInfo as $k=>$v){
-                $g = Goods::where(['id'=>$v['goods_id']])->first()->toArray();
-                $total_price += $g['goods_price'];
-                $goods_list[] = $g;
+                $goodsInfo = Goods::where(['id'=>$v['goods_id']])->first()->toArray();
+                $total_price += $goodsInfo['goods_price']*$v['buy_number'];
+                $goods_list[] = $goodsInfo;
             }
             //展示购物车
             $data = [
@@ -55,5 +55,11 @@ class CartController extends Controller
         }
 
 
+    }
+
+    //商品列表
+    public function goodsList(){
+        $goodsInfo=Goods::all()->toArray();
+        return view('goods/goodslist',['data'=>$goodsInfo]);
     }
 }

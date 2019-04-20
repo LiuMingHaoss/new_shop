@@ -75,16 +75,22 @@
         <div class="title m-b-md">
 
         </div>
-        <ul>
-            @foreach ($goods_list as $k=>$v)
-                <li>{{$v['goods_name']}} --- ￥{{$v['goods_price']}}</li>
-            @endforeach
-        </ul>
+        <table>
+            <th>商品id</th>
+            <th>商品名称</th>
+            <th>商品价格</th>
+            <th>操作</th>
+            @foreach($data as $k => $v)
+            <tr>
+                <td>{{$v['id']}}</td>
+                <td>{{$v['goods_name']}}</td>
+                <td>{{$v['goods_price']}}</td>
+                <td><a href="/addcart/{{$v['id']}}">添加购物车</a></td>
+            </tr>
+                @endforeach
+        </table>
         <hr>
-        总价：¥{{$total}}<br>
-        <form action="/orderadd" method="get">
-            <input type="submit" value="提交订单">
-        </form>
+
     </div>
 </div>
 </body>
