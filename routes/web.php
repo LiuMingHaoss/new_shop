@@ -32,3 +32,5 @@ Route::get('/goods', 'CartController@goodsList');
 
 //微信支付
 Route::get('/weixin_pay/{oid}', 'Weixin\WxPayController@pay');
+Route::post('/weixin/pay/notify', 'Weixin\WxPayController@notify');
+
