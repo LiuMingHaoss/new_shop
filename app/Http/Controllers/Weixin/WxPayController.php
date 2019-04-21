@@ -51,7 +51,8 @@ class WxPayController extends Controller
 
 
         $data=[
-            'code_url'=>$data->code_url
+            'code_url'=>$data->code_url,
+            'oid'=>$oid,
         ];
 
 
@@ -160,6 +161,8 @@ class WxPayController extends Controller
             $sign = true;
             if($sign){       //签名验证成功
                 //TODO 逻辑处理  订单状态更新
+                $pay_time = strtotime($xml->time_end);
+                Order::where(['order_no'=>$xml->out_trade_no])->update(['pay_time'=>$pay_time]);
             }else{
                 //TODO 验签失败
                 echo '验签失败，IP: '.$_SERVER['REMOTE_ADDR'];

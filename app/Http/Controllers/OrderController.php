@@ -48,4 +48,22 @@ class OrderController extends Controller
         $orderInfo=Order::where(['uid'=>Auth::id()])->OrderBy('id','desc')->get()->toArray();
         return view('order/orderlist',['data'=>$orderInfo]);
     }
+
+    //查询订单支付状态
+    public function pauStatus(){
+        $oid=intval($_GET['oid']);
+        $info=Order::where(['oid'=>$oid])->first();
+        $response=[];
+        if($info){
+            if($info->pay_time>0){  //已支付
+                $response=[
+                    'status'=>0,
+                    'msg' =>'ok'
+                ];
+            }
+        }else{
+            die('订单不存在');
+        }
+        echo json_encode($response);
+    }
 }

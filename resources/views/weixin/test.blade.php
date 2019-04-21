@@ -94,6 +94,21 @@
 <script src="/js/weixin/qrcode.js"></script>
 <script type="text/javascript">
     new QRCode(document.getElementById("qrcode"), "{{$code_url}}");
+
+    //ajax轮询
+    setInterval(function(){
+        $.ajax({
+            url:'/order/paystatus?oid='+"{{$oid}}",
+            type:'get',
+            dataType:'json',
+            success:function(res){
+                if(res.status==0){
+                    alert('支付成功');
+                    location.href="/pay/success?oid={{$oid}}";
+                }
+            }
+        });
+    },2000)
 </script>
 
 </body>
