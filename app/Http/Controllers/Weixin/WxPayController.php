@@ -172,4 +172,10 @@ class WxPayController extends Controller
         $response = '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         echo $response;
     }
+
+    //支付成功
+    public function paySuccess(){
+        $oid=intval($_GET['oid']);
+        echo '订单'.$oid.'支付成功';
+    }
 }

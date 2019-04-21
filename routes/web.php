@@ -36,4 +36,5 @@ Route::post('/weixin/pay/notify', 'Weixin\WxPayController@notify');
 
 //提示支付成功
 Route::get('/order/paystatus', 'OrderController@orderAdd');
+Route::get('/pay/success','Weixin\WxPayController@paySuccess');
 
