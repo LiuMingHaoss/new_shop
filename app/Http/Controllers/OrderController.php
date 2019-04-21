@@ -50,7 +50,7 @@ class OrderController extends Controller
     }
 
     //查询订单支付状态
-    public function pauStatus(){
+    public function payStatus(){
         $oid=intval($_GET['oid']);
         $info=Order::where(['oid'=>$oid])->first();
         $response=[];
