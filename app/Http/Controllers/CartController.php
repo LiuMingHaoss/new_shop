@@ -57,9 +57,5 @@ class CartController extends Controller
 
     }
 
-    //商品列表
-    public function goodsList(){
-        $goodsInfo=Goods::all()->toArray();
-        return view('goods/goodslist',['data'=>$goodsInfo]);
-    }
+
 }

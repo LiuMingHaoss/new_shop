@@ -76,22 +76,48 @@
 
         </div>
         <table>
-            <th>商品id</th>
-            <th>商品名称</th>
-            <th>商品价格</th>
-            <th>操作</th>
-            @foreach($data as $k => $v)
+           <tr>
+               <td>商品名称：</td>
+               <td>商品价格：</td>
+               <td>浏览次数：</td>
+           </tr>
             <tr>
-                <td>{{$v['id']}}</td>
-                <td>{{$v['goods_name']}}</td>
-                <td>{{$v['goods_price']}}</td>
-                <td><a href="/addcart/{{$v['id']}}">添加购物车</a></td>
-                <td><a href="/goods_desc/{{$v['id']}}">详情</a></td>
+                <td>{{$data['goods_name']}}</td>
+                <td>{{$data['goods_price']}}</td>
+                <td>{{$view}}</td>
+
             </tr>
-                @endforeach
+
         </table>
         <hr>
 
+
+            <table>
+                <tr>
+                    <td>浏览排行</td>
+                    <td>浏览次数</td>
+                </tr>
+                @foreach($goodsInfo as $k=>$v)
+                <tr>
+                    <td width="150">{{$v['goods_name']}}</td>
+                    <td>{{$v['view']}}</td>
+                </tr>
+                @endforeach
+            </table>
+
+        <hr>
+        <table>
+            <tr>
+                <td>浏览历史</td>
+                <td>最后一次浏览时间</td>
+            </tr>
+            @foreach($last_look as $k=>$v)
+                <tr>
+                    <td width="150">{{$v['goods_name']}}</td>
+                    <td>{{date('Y-m-d H:i:s',$v['last_time'])}}</td>
+                </tr>
+            @endforeach
+        </table>
     </div>
 </div>
 </body>

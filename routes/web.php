@@ -28,7 +28,10 @@ Route::get('/orderadd', 'OrderController@orderAdd');
 Route::get('/orderlist', 'OrderController@orderList');
 
 //商品列表
-Route::get('/goods', 'CartController@goodsList');
+Route::get('/goods', 'GoodsController@goodsList');
+//商品详情
+Route::get('/goods_desc/{goods_id}', 'GoodsController@goodsDesc');
+
 
 //微信支付
 Route::get('/weixin_pay/{oid}', 'Weixin\WxPayController@pay');
