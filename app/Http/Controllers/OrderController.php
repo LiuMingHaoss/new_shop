@@ -56,6 +56,8 @@ class OrderController extends Controller
         $response=[];
         if($info){
             if($info->pay_time>0){  //已支付
+
+                //支付成功返回数据
                 $response=[
                     'status'=>0,
                     'msg' =>'ok'
