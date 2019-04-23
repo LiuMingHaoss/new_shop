@@ -27,7 +27,7 @@ class JssdkController extends Controller
             $js_config=[
                 'appId'=>env('WX_APPID'),   //公众号appid
                 'timestamp'=>$timestamp,            //时间戳
-                'nonceStr'=>Str::random(10),    //随机字符串
+                'nonceStr'=>$nonceStr,    //随机字符串
                 'signature'=>$sign,                //签名
 
             ];
