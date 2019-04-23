@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redis;
+use GuzzleHttp\Client;
 class JssdkController extends Controller
 {
     //
@@ -43,6 +44,6 @@ class JssdkController extends Controller
 
     //下载照片
     public function upload(){
-        echo '<pre>';print_r($_GET);echo '</pre>';
+        $media_id=$_GET['media_id'];
     }
 }
