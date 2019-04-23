@@ -41,3 +41,5 @@ Route::post('/weixin/pay/notify', 'Weixin\WxPayController@notify');
 Route::get('/order/paystatus', 'OrderController@payStatus');
 Route::get('/pay/success','Weixin\WxPayController@paySuccess');
 
+//weixin jssdk
+Route::get('/weixin/test','Weixin\JssdkController@jsTest');
