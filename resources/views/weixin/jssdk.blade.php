@@ -21,7 +21,7 @@
         timestamp:"{{$jsconfig['timestamp']}}" , // 必填，生成签名的时间戳
         nonceStr:"{{$jsconfig['nonceStr']}}", // 必填，生成签名的随机串
         signature:"{{$jsconfig['signature']}}",// 必填，签名
-        jsApiList: ['chooseImage'] // 必填，需要使用的JS接口列表
+        jsApiList: ['chooseImage','uploadImage'] // 必填，需要使用的JS接口列表
     });
 
     wx.ready(function(){
@@ -39,7 +39,7 @@
                         $(node).attr('src',val);
 
                         wx.uploadImage({
-                            localId: v, // 需要上传的图片的本地ID，由chooseImage接口获得
+                            localId: val, // 需要上传的图片的本地ID，由chooseImage接口获得
                             isShowProgressTips: 1, // 默认为1，显示进度提示
                             success: function (res) {
                                 var serverId = res.serverId; // 返回图片的服务器端ID
