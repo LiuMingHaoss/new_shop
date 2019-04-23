@@ -35,4 +35,9 @@ class JssdkController extends Controller
 
         return view('weixin.jssdk',['jsconfig'=>$js_config]);
     }
+
+    //获取照片
+    public function getImg(){
+        echo '<pre>';print_r($_GET);echo '</pre>';
+    }
 }

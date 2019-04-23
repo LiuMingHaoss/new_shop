@@ -37,6 +37,23 @@
                         img+=val+','
                         var node = "#img"+i;
                         $(node).attr('src',val);
+
+                        wx.uploadImage({
+                            localId: v, // 需要上传的图片的本地ID，由chooseImage接口获得
+                            isShowProgressTips: 1, // 默认为1，显示进度提示
+                            success: function (res) {
+                                var serverId = res.serverId; // 返回图片的服务器端ID
+                                console.log(serverId);
+                            }
+                        });
+                    })
+
+                    $.ajax({
+                        url:'/weixin/getImg?img='+img,     //将上传的照片id发送给后端
+                        type:'get',
+                        success:function(res){
+                            console.log(res);
+                        }
                     })
                 }
             });
