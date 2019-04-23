@@ -40,4 +40,9 @@ class JssdkController extends Controller
     public function getImg(){
         echo '<pre>';print_r($_GET);echo '</pre>';
     }
+
+    //下载照片
+    public function upload(){
+        echo '<pre>';print_r($_GET);echo '</pre>';
+    }
 }

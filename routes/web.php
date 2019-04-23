@@ -44,4 +44,6 @@ Route::get('/pay/success','Weixin\WxPayController@paySuccess');
 //weixin jssdk
 Route::get('/weixin/test','Weixin\JssdkController@jsTest');
 Route::get('/weixin/getImg','Weixin\JssdkController@getImg'); //获取jssdk上传的照片
+Route::get('/weixin/upload','Weixin\JssdkController@upload'); //下载的照片
+
 
