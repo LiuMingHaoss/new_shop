@@ -21,7 +21,7 @@
         timestamp:"{{$jsconfig['timestamp']}}" , // 必填，生成签名的时间戳
         nonceStr:"{{$jsconfig['nonceStr']}}", // 必填，生成签名的随机串
         signature:"{{$jsconfig['signature']}}",// 必填，签名
-        jsApiList: ['chooseImage','uploadImage'] // 必填，需要使用的JS接口列表
+        jsApiList: ['chooseImage','uploadImage','downloadImage'] // 必填，需要使用的JS接口列表
     });
 
     wx.ready(function(){
