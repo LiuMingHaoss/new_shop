@@ -9,6 +9,7 @@
 </head>
 <body>
 <button id="btn">选择照片</button>
+<button id="btn2">分享</button>
 <img src="" alt="" id="img0" width="300">
 <img src="" alt="" id="img1" width="300">
 <img src="" alt="" id="img2" width="300">
@@ -21,7 +22,7 @@
         timestamp:"{{$jsconfig['timestamp']}}" , // 必填，生成签名的时间戳
         nonceStr:"{{$jsconfig['nonceStr']}}", // 必填，生成签名的随机串
         signature:"{{$jsconfig['signature']}}",// 必填，签名
-        jsApiList: ['chooseImage','uploadImage','downloadImage'] // 必填，需要使用的JS接口列表
+        jsApiList: ['chooseImage','uploadImage','downloadImage','updateAppMessageShareData'] // 必填，需要使用的JS接口列表
     });
 
     wx.ready(function(){
@@ -72,7 +73,17 @@
                 }
             });
         })
-
+        $('#btn2').click(function(){
+            wx.updateAppMessageShareData({
+                title: '哈喽', // 分享标题
+                desc: '你好', // 分享描述
+                link: '1809liuminghao.comcto.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: '', // 分享图标
+                success: function () {
+                    // 设置成功
+                }
+            })
+        })
     })
 </script>
 </body>
