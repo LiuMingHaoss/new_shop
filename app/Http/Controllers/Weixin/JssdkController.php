@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redis;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
+
 class JssdkController extends Controller
 {
     //
@@ -44,6 +46,24 @@ class JssdkController extends Controller
 
     //下载照片
     public function upload(){
+
         $media_id=$_GET['media_id'];
+
+        $access_token=getWxAccessToken();
+        //请求地址
+        $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$media_id;
+        //接口数据
+        $clinet=new Client();
+        $response=$clinet->request('GET',$url);
+
+        //获取文件名称
+        $file_info=$response->getHeader('Content-disposition');
+        $file_name = substr(md5(time().mt_rand(10000,99999)),10,8);
+        $file_newname = $file_name.'_'.substr(rtrim($file_info[0],'"'),-20);
+
+        //保存图片
+        $image=$response->getBody();
+        $wx_image_path = 'wx_media/images/'.$file_newname;
+        $rr = Storage::disk('local')->put($wx_image_path,$image);
     }
 }
