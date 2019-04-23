@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Weixin;
-require_once 'vendor/autoload.php';
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
