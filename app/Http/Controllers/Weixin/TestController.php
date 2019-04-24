@@ -86,7 +86,7 @@ class TestController extends Controller
         $arr=json_decode(file_get_contents($url1),true);
         $url2='https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
         $userInfo=json_decode(file_get_contents($url2),true);
-        print_r($userInfo);die;
+
         $user_info=[
             'openid'=>$userInfo['openid'],
             'nickname'=>$userInfo['nickname'],
@@ -96,6 +96,7 @@ class TestController extends Controller
             'headimgurl'=>$userInfo['headimgurl'],
             'create_time'=>time(),
         ];
+        print_r($user_info);die;
         $res=User::insertGetId($user_info);
     }
 }
