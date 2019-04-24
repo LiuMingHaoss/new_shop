@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Weixin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 class TestController extends Controller
 {
     //微信推送
