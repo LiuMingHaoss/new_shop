@@ -89,10 +89,10 @@ class TestController extends Controller
         $user_info=[
             'openid'=>$userInfo['openid'],
             'nickname'=>$userInfo['nickname'],
-            'country'=>$userInfo[''],
-            'province'=>$userInfo[''],
-            'city'=>$userInfo[''],
-            'headimgurl'=>$userInfo[''],
+            'country'=>$userInfo['country'],
+            'province'=>$userInfo['province'],
+            'city'=>$userInfo['city'],
+            'headimgurl'=>$userInfo['headimgurl'],
             'create_time'=>time(),
         ];
         $res=User::insertGetId($user_info);
