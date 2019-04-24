@@ -68,4 +68,14 @@ class OrderController extends Controller
         }
         echo json_encode($response);
     }
+
+    //定时删除过期订单
+    public function delOrder(){
+        $orderInfo=Order::all()->toArray();
+        foreach($orderInfo as $k=>$v){
+            if(time()-$v['create_time']>1800 ){
+                $res=Order::where('id',$v['id'])->update(['is_del'=>2]);
+            }
+        }
+    }
 }

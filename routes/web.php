@@ -26,6 +26,8 @@ Route::get('/cartlist', 'CartController@cartList');
 //订单添加
 Route::get('/orderadd', 'OrderController@orderAdd');
 Route::get('/orderlist', 'OrderController@orderList');
+Route::get('/delOrder', 'OrderController@delOrder');
+
 
 //商品列表
 Route::get('/goods', 'GoodsController@goodsList');
@@ -45,5 +47,10 @@ Route::get('/pay/success','Weixin\WxPayController@paySuccess');
 Route::get('/weixin/test','Weixin\JssdkController@jsTest');
 Route::get('/weixin/getImg','Weixin\JssdkController@getImg'); //获取jssdk上传的照片
 Route::get('/weixin/upload','Weixin\JssdkController@upload'); //下载的照片
+
+//微信推送消息
+Route::get('/index','Weixin\TestController@wxEvent');
+Route::get('/weixin/goods','TestController@goodsdesc');
+
 
 
