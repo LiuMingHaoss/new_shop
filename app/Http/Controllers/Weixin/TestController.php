@@ -85,6 +85,7 @@ class TestController extends Controller
         $arr=json_decode(file_get_contents($url1),true);
         $url2='https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
         $userInfo=json_decode(file_get_contents($url2),true);
-        echo '<pre>' .print_r($userInfo);echo '<hr>';
+        print_r('<pre>'); 
+        print_r($userInfo);
     }
 }
