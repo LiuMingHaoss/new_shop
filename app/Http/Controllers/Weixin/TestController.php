@@ -91,7 +91,7 @@ class TestController extends Controller
         $users=User::where('openid',$userInfo['openid'])->first();
         if($users){
             $data=[
-                'data'=>'欢迎回来'.$userInfo['nickname'],
+                'data'=>'欢迎回来,'.$userInfo['nickname'],
             ];
         }else{
             $user_info=[
@@ -105,7 +105,7 @@ class TestController extends Controller
             ];
             $res=User::insertGetId($user_info);
             $data=[
-                'data'=>'欢迎你'.$userInfo['nickname'],
+                'data'=>'欢迎你,'.$userInfo['nickname'],
             ];
         }
 
