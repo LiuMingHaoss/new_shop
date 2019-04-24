@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Model\User;
 class TestController extends Controller
 {
     //微信推送
@@ -85,7 +86,15 @@ class TestController extends Controller
         $arr=json_decode(file_get_contents($url1),true);
         $url2='https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
         $userInfo=json_decode(file_get_contents($url2),true);
-        print_r('<pre>'); 
-        print_r($userInfo);
+        $user_info=[
+            'openid'=>$userInfo['openid'],
+            'nickname'=>$userInfo['nickname'],
+            'country'=>$userInfo[''],
+            'province'=>$userInfo[''],
+            'city'=>$userInfo[''],
+            'headimgurl'=>$userInfo[''],
+            'create_time'=>time(),
+        ];
+        $res=User::insertGetId($user_info);
     }
 }
