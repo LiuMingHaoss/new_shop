@@ -87,17 +87,28 @@ class TestController extends Controller
         $url2='https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
         $userInfo=json_decode(file_get_contents($url2),true);
 
-        $user_info=[
-            'openid'=>$userInfo['openid'],
-            'nickname'=>$userInfo['nickname'],
-            'country'=>$userInfo['country'],
-            'province'=>$userInfo['province'],
-            'city'=>$userInfo['city'],
-            'headimgurl'=>$userInfo['headimgurl'],
-            'create_time'=>time(),
-        ];
 
-        $res=User::insertGetId($user_info);
-        print_r($res);die;
+        $users=User::where('openid',$userInfo['openid'])->first();
+        if($users){
+            $data=[
+                'data'=>'欢迎回来'.$userInfo['nickname'],
+            ];
+        }else{
+            $user_info=[
+                'openid'=>$userInfo['openid'],
+                'nickname'=>$userInfo['nickname'],
+                'country'=>$userInfo['country'],
+                'province'=>$userInfo['province'],
+                'city'=>$userInfo['city'],
+                'headimgurl'=>$userInfo['headimgurl'],
+                'create_time'=>time(),
+            ];
+            $res=User::insertGetId($user_info);
+            $data=[
+                'data'=>'欢迎你'.$userInfo['nickname'],
+            ];
+        }
+
+        return view('weixin.user',$data);
     }
 }
