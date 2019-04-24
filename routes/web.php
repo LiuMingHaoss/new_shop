@@ -52,5 +52,7 @@ Route::get('/weixin/upload','Weixin\JssdkController@upload'); //下载的照片
 Route::post('/index','Weixin\TestController@wxEvent');
 Route::get('/weixin/goods','Weixin\TestController@goodsdesc');
 
+Route::get('/weixin/wxweb','Weixin\TestController@wxweb');  //授权回调地址
+
 
 

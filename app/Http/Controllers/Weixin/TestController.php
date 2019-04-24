@@ -78,4 +78,8 @@ class TestController extends Controller
         return view('weixin.goods',['jsconfig'=>$js_config]);
     }
 
+    //微信授权回调
+    public function wxweb(){
+        print_r($_GET);
+    }
 }
