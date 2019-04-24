@@ -80,6 +80,9 @@ class TestController extends Controller
 
     //微信授权回调
     public function wxweb(){
-        print_r($_GET);
+        $code=$_GET['code'];
+        $url1='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET').'&code='.$code.'&grant_type=authorization_code';
+        $access_token=json_decode(file_get_contents($url1),true);
+        print_r($access_token);
     }
 }
