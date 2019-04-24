@@ -96,7 +96,8 @@ class TestController extends Controller
             'headimgurl'=>$userInfo['headimgurl'],
             'create_time'=>time(),
         ];
-        print_r($user_info);die;
+
         $res=User::insertGetId($user_info);
+        print_r($res);die;
     }
 }
