@@ -49,6 +49,7 @@ Route::get('/weixin/getImg','Weixin\JssdkController@getImg'); //获取jssdk上�
 Route::get('/weixin/upload','Weixin\JssdkController@upload'); //下载的照片
 
 //微信推送消息
+Route::get('/index','Weixin\TestController@valid');
 Route::post('/index','Weixin\TestController@wxEvent');
 Route::get('/weixin/goods','Weixin\TestController@goodsdesc');
 

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 class TestController extends Controller
 {
     //微信推送
+    public function valid(){
+        echo $_GET['echostr'];
+    }
     public function wxEvent(){
         $content=file_get_contents('php://input');
 
