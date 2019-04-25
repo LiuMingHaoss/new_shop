@@ -76,6 +76,8 @@ class TestController extends Controller
             $wx_image_path = 'wx_media/images/'.$file_newname;
             $rr = Storage::disk('local')->put($wx_image_path,$image);
             var_dump($rr);
+            echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'图片不错 '.']]></Content></xml>';
+
         }
         echo "SUCCESS";
     }
