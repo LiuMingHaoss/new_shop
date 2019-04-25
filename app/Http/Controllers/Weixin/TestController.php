@@ -32,6 +32,13 @@ class TestController extends Controller
         $openid=$data->FromUserName;    //用户openid
         $Content=$data->Content;
         if($data->MsgType=='text'){
+            $info=[
+                'openid'=>$openid,
+                'create_time'  => time(),
+                'msg_type'  => 'text',
+                'text'=>$data->Content,
+            ];
+            $res=DB::table('wx_image')->insert($info);
             if($Content=='最新商品'){
                 $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
                 foreach($goodsInfo as $k=>$v){
@@ -58,24 +65,19 @@ class TestController extends Controller
 
 
         }else if($data->MsgType=='image'){
-            $access_token=getWxAccessToken();
-
-            //请求地址
-            $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$data->MediaId;
-            //接口数据
-            $clinet=new Client();
-            $response=$clinet->request('GET',$url);
-            //获取文件名称
-            $headers=$response->getHeaders();
-            $file_info = $headers['Content-disposition'][0];
-
-            $file_name = substr(md5(time().mt_rand(10000,99999)),10,8);
-            $file_newname = $file_name.'_'.substr(rtrim($file_info,'"'),-20);
-            //保存图片
-            $image=$response->getBody();
-            $wx_image_path = 'wx_media/images/'.$file_newname;
-            $rr = Storage::disk('local')->put($wx_image_path,$image);
-            var_dump($rr);
+           
+            $info=[
+                'openid'=>$openid,
+                'create_time'  => time(),
+                'msg_type'  => 'image',
+                'image_path'=>$data->PicUrl,
+            ];
+            $res=DB::table('wx_image')->insert($info);
+            if($res){
+                echo '图片信息入库成功';
+            }else{
+                echo '图片信息入库失败';
+            }
             echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'图片不错 '.']]></Content></xml>';
 
         }
