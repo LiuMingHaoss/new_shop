@@ -55,25 +55,26 @@ class TestController extends Controller
 
 
         }else if($data->MsgType=='image'){
-            echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'图片不错 '.']]></Content></xml>';
-die;
             $access_token=getWxAccessToken();
+
             //请求地址
             $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$data->MediaId;
             //接口数据
             $clinet=new Client();
             $response=$clinet->request('GET',$url);
             //获取文件名称
-            $file_info=$response->getHeader('Content-disposition');
-            $file_name = substr(md5(time().mt_rand(10000,99999)),10,8);
-            $file_newname = $file_name.'_'.substr(rtrim($file_info[0],'"'),-20);
+            $headers=$response->getHeaders();
+            $file_info = $headers['Content-disposition'][0];
 
+            $file_name = substr(md5(time().mt_rand(10000,99999)),10,8);
+            $file_newname = $file_name.'_'.substr(rtrim($file_info,'"'),-20);
             //保存图片
             $image=$response->getBody();
             $wx_image_path = 'wx_media/images/'.$file_newname;
             $rr = Storage::disk('local')->put($wx_image_path,$image);
             var_dump($rr);
         }
+        echo "SUCCESS";
     }
     //商品详情
     public function goodsdesc(){
