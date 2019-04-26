@@ -9,7 +9,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
-
+use GuzzleHttp\Client;
 class UserController extends Controller
 {
     use HasResourceActions;
@@ -138,5 +138,35 @@ class UserController extends Controller
         $form->text('status', 'Status')->default('1');
 
         return $form;
+    }
+
+    //消息群发
+    public function allsend(Content $content){
+        $userInfo=User::all()->toArray();
+        return $content
+            ->header('微信用户')
+            ->description('群发')
+            ->body(view('admin.weixin.allsend',['data'=>$userInfo]));
+    }
+
+    public function allsenddo(){
+        $arr=request()->input();
+        $text=$arr['text'];
+        $openid=explode(',',$arr['openid']);
+        $access_token=getWxAccessToken();
+        $url='https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token='.$access_token;
+        $client=new Client();
+        $send_arr=[
+            'touser'=>$openid  ,
+            'msgtype'=>'text',
+            'text'=>[
+                'content'=>$text
+            ]
+        ];
+        $msg_json=json_encode($send_arr,JSON_UNESCAPED_UNICODE);
+        $response=$client->request('POST',$url,[
+            'body'=>$msg_json,
+        ]);
+        echo 1;
     }
 }
