@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Model\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Psr7\Uri;
 class TestController extends Controller
 {
     //微信推送
@@ -70,18 +71,14 @@ class TestController extends Controller
             $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$data->MediaId;
 
             //接口数据
-            $clinet=new Client();
-            $response=$clinet->request('GET',$url);
-
-            //获取文件名称
-            $file_info=$response->getHeader('Content-disposition');
-            $file_name = substr(md5(time().mt_rand(10000,99999)),10,8);
-            $file_newname = $file_name.'_'.substr(rtrim($file_info[0],'"'),-20);
-            //保存图片
-            $image=$response->getBody();
-            $wx_image_path = 'wx_media/images/'.$file_newname;
-            $rr = Storage::disk('local')->put($wx_image_path,$image);
-            var_dump($rr);
+            $client=new Client();
+            $response = $client->get(new Uri($url));
+            $headers = $response->getHeaders();     //获取 响应 头信息
+            $file_info = $headers['Content-disposition'][0];            //获取文件名
+            $file_name =  rtrim(substr($file_info,-20),'"');
+            $new_file_name = 'weixin/' .substr(md5(time().mt_rand()),10,8).'_'.$file_name;
+            //保存文件
+            $rs = Storage::put($new_file_name, $response->getBody());       //保存文件
 
             $info=[
                 'openid'=>$openid,
