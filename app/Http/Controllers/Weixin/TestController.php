@@ -67,21 +67,20 @@ class TestController extends Controller
 
         }else if($data->MsgType=='image'){
             $access_token=getWxAccessToken();
-            var_dump($access_token);die;
             //请求地址
             $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$data->MediaId;
-            var_dump($url);die;
+
             //接口数据
             $client=new Client();
             $response = $client->get(new Uri($url));
             $headers = $response->getHeaders();     //获取 响应 头信息
-            var_dump($headers);die;
+            var_dump($headers);
             $file_info = $headers['Content-disposition'][0];            //获取文件名
             $file_name =  rtrim(substr($file_info,-20),'"');
             $new_file_name = 'weixin/' .substr(md5(time().mt_rand()),10,8).'_'.$file_name;
             //保存文件
             $rs = Storage::put($new_file_name, $response->getBody());       //保存文件
-
+            var_dump($rs);
             $info=[
                 'openid'=>$openid,
                 'create_time'  => time(),
