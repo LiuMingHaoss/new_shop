@@ -67,6 +67,7 @@ class TestController extends Controller
 
         }else if($data->MsgType=='image'){
             $access_token=getWxAccessToken();
+            var_dump($access_token);
             //请求地址
             $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$data->MediaId;
 

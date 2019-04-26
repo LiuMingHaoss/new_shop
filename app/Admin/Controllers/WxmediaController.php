@@ -9,8 +9,9 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
-
-class WximageController extends Controller
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
+class WxmediaController extends Controller
 {
     use HasResourceActions;
 
@@ -69,9 +70,35 @@ class WximageController extends Controller
         return $content
             ->header('Create')
             ->description('description')
-            ->body($this->form());
+            ->body(view('admin.weixin.addimg'));
     }
+    public function createdo(){
+        $img_name=$_FILES['media']['name'];
+        $access_token=getWxAccessToken();
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token='.$access_token.'&type=image';
+        $client=new Client();
 
+        $response = $client->request('post',$url,[
+            'multipart' => [
+                [
+                    'name' => 'media',
+                    'contents' => fopen('images/'.$img_name, 'r'),
+                ]
+            ]
+        ]);
+
+        $json =  $response->getBody();
+        $media=json_decode($json);
+        $info=[
+            'type'=>$media->type,
+            'media_id'=>$media->media_id,
+            'create_time'=>$media->created_at
+        ];
+        $res=DB::table('wx_media')->insert($info);
+        if($res){
+            return redirect('/admin/msg');
+        }
+    }
     /**
      * Make a grid builder.
      *
@@ -82,13 +109,10 @@ class WximageController extends Controller
         $grid = new Grid(new Wximage);
 
         $grid->id('Id');
-        $grid->openid('Openid');
-        $grid->msg_type('素材类型');
-        $grid->image_path('Image path')->display(function($img){
-            return '<img src="'.$img.'" width="30">';
-        });
+        $grid->type('图片类型');
+        $grid->media_id('Media id');
         $grid->create_time('Create time');
-        $grid->text('text');
+
         return $grid;
     }
 
@@ -103,9 +127,8 @@ class WximageController extends Controller
         $show = new Show(Wximage::findOrFail($id));
 
         $show->id('Id');
-        $show->openid('Openid');
-        $show->msg_type('Msg type');
-        $show->image_path('Image path');
+        $show->type('Type');
+        $show->media_id('Media id');
         $show->create_time('Create time');
 
         return $show;
@@ -120,9 +143,8 @@ class WximageController extends Controller
     {
         $form = new Form(new Wximage);
 
-        $form->text('openid', 'Openid');
-        $form->text('msg_type', 'Msg type');
-        $form->text('image_path', 'Image path');
+        $form->text('type', 'Type');
+        $form->text('media_id', 'Media id');
         $form->number('create_time', 'Create time');
 
         return $form;

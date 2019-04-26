@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Wximage extends Model
 {
     //
-    protected $table = 'wx_image';
+    protected $table = 'wx_media';
     public $timestamps = false;
 }
