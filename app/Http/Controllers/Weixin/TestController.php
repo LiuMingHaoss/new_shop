@@ -69,7 +69,7 @@ class TestController extends Controller
             $access_token=getWxAccessToken();
             //请求地址
             $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$data->MediaId;
-
+            var_dump($url);die;
             //接口数据
             $client=new Client();
             $response = $client->get(new Uri($url));
