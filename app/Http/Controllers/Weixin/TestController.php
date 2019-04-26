@@ -74,13 +74,12 @@ class TestController extends Controller
             $client=new Client();
             $response = $client->get(new Uri($url));
             $headers = $response->getHeaders();     //获取 响应 头信息
-            var_dump($headers);
             $file_info = $headers['Content-disposition'][0];            //获取文件名
             $file_name =  rtrim(substr($file_info,-20),'"');
             $new_file_name = 'weixin/' .substr(md5(time().mt_rand()),10,8).'_'.$file_name;
             //保存文件
-            $rs = Storage::put($new_file_name, $response->getBody());       //保存文件
-            var_dump($rs);
+            $rr = Storage::disk('local')->put($new_file_name,$response->getBody());       //保存文件
+            var_dump($rr);
             $info=[
                 'openid'=>$openid,
                 'create_time'  => time(),
