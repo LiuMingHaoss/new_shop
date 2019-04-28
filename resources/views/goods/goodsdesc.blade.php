@@ -118,7 +118,14 @@
                 </tr>
             @endforeach
         </table>
+        <div id="qrcode"></div>
     </div>
 </div>
+
+<script src="/js/jquery/jquery-1.12.4.min.js"></script>
+<script src="/js/weixin/qrcode.js"></script>
+<script type="text/javascript">
+    new QRCode(document.getElementById("qrcode"), "{{$url}}");
+</script>
 </body>
 </html>

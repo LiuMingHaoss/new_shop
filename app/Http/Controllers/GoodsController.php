@@ -35,8 +35,8 @@ class GoodsController extends Controller
 
         //浏览次数排行
         $goods_info=$this->getStore($view,$goods_id);
-
-        return view('goods.goodsdesc',['data'=>$goodsInfo,'view'=>$view,'goodsInfo'=>$goods_info,'last_look'=>$last_look]);
+        $url='http://1809liuminghao.comcto.com/goods_desc/'.$goods_id;
+        return view('goods.goodsdesc',['data'=>$goodsInfo,'view'=>$view,'goodsInfo'=>$goods_info,'last_look'=>$last_look,'url'=>$url]);
     }
 
     //根据浏览排行商品数据

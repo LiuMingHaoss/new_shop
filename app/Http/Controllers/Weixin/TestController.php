@@ -85,7 +85,7 @@ class TestController extends Controller
                           </Articles>
                         </xml>';
             }
-            
+
         }else if($data->MsgType=='text'){
             $info=[
                 'openid'=>$openid,
