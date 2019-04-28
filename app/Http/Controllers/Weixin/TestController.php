@@ -35,14 +35,36 @@ class TestController extends Controller
         $event=$data->Event;            //事件类型
         $openid=$data->FromUserName;    //用户openid
         $Content=$data->Content;
-        if($event=='SCAN'){
-            $info=[
-                'openid'=>$openid,
-                'scene_id'=>$data->EventKey,
-                'create_time'=>$data->CreateTime
-            ];
-            $res=Wxscene::insertGetId($info);
-            if($res){
+        if($data->MsgType=='event'){
+            if($event=='SCAN'){
+                $info=[
+                    'openid'=>$openid,
+                    'scene_id'=>$data->EventKey,
+                    'create_time'=>$data->CreateTime
+                ];
+                $res=Wxscene::insertGetId($info);
+                if($res){
+                    $v=DB::table('shop_goods')->where('goods_id',14)->first();
+                    $img_url='http://1809liuminghao.comcto.com/goodsImg/'.$v->goods_img;
+                    $desc_url='http://1809liuminghao.comcto.com/weixin/goods?goods_id='.$v->goods_id;
+                    echo '
+                        <xml>
+                          <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                          <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                          <CreateTime>'.time().'</CreateTime>
+                          <MsgType><![CDATA[news]]></MsgType>
+                          <ArticleCount>1</ArticleCount>
+                          <Articles>
+                            <item>
+                              <Title><![CDATA['.$v->goods_name.'hellow,欢迎回来'.']]></Title>
+                              <Description><![CDATA['.$v->goods_desc.']]></Description>
+                              <PicUrl><![CDATA['.$img_url.']]></PicUrl>
+                              <Url><![CDATA['.$desc_url.']]></Url>
+                            </item>
+                          </Articles>
+                        </xml>';
+                }
+            }else if($event=='subscribe'){
                 $v=DB::table('shop_goods')->where('goods_id',14)->first();
                 $img_url='http://1809liuminghao.comcto.com/goodsImg/'.$v->goods_img;
                 $desc_url='http://1809liuminghao.comcto.com/weixin/goods?goods_id='.$v->goods_id;
@@ -55,7 +77,7 @@ class TestController extends Controller
                           <ArticleCount>1</ArticleCount>
                           <Articles>
                             <item>
-                              <Title><![CDATA['.$v->goods_name.']]></Title>
+                              <Title><![CDATA['.$v->goods_name.'.hellow,欢迎加入'.']]></Title>
                               <Description><![CDATA['.$v->goods_desc.']]></Description>
                               <PicUrl><![CDATA['.$img_url.']]></PicUrl>
                               <Url><![CDATA['.$desc_url.']]></Url>
@@ -63,7 +85,7 @@ class TestController extends Controller
                           </Articles>
                         </xml>';
             }
-
+            
         }else if($data->MsgType=='text'){
             $info=[
                 'openid'=>$openid,
