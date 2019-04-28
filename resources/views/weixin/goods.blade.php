@@ -109,35 +109,11 @@
                 title: '活动了解一下', // 分享标题
                 desc: '活动活动活动', // 分享描述
                 link: 'http://1809liuminghao.comcto.com/weixin/goods', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                imgUrl: 'http://1809liuminghao.comcto.com/goodsImg/'{{$goodsInfo['goods_img']}}, // 分享图标
+                imgUrl: 'http://1809liuminghao.comcto.com/goodsImg/20190220\3aae8fd8caf681e8467323dea278361c.jpg', // 分享图标
                 success: function () {
                     // 设置成功
                 }
             })
-
-            wx.onMenuShareAppMessage({
-                title: '商品详情了解一下', // 分享标题
-                desc: '商品详情', // 分享描述
-                link: 'http://1809liuminghao.comcto.com/weixin/goods', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                imgUrl: 'http://1809liuminghao.comcto.com/goodsImg/20190220/3a7b8dea4c6c14b2aa0990a2a2f0388e.jpg', // 分享图标
-                type: '', // 分享类型,music、video或link，不填默认为link
-                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                success: function () {
-                // 用户点击了分享后执行的回调函数
-                }
-            });
-            //分享至朋友圈 空间
-            wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
-                wx.updateTimelineShareData({
-                    title: '商品详情了解一下', // 分享标题
-                    link: 'http://1809liuminghao.comcto.com/weixin/goods', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: 'http://1809liuminghao.comcto.com/goodsImg/20190220/3a7b8dea4c6c14b2aa0990a2a2f0388e.jpg', // 分享图标
-                    success: function () {
-                        // 设置成功
-                    }
-                })
-            });
-
     })
 </script>
 </body>
