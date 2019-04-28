@@ -10,6 +10,7 @@ use App\Model\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Psr7\Uri;
+use App\Model\Wxscene;
 class TestController extends Controller
 {
     //微信推送
@@ -32,13 +33,22 @@ class TestController extends Controller
         $event=$data->Event;            //事件类型
         $openid=$data->FromUserName;    //用户openid
         $Content=$data->Content;
-        if($data->MsgType=='text'){
+        if($event=='SCAN'){
+            $info=[
+                'openid'=>$openid,
+                'scene_id'=>$data->EventKey,
+                'create_time'=>$data->CreateTime
+            ];
+            Wxscene::insertGetId($info);
+
+        }else if($data->MsgType=='text'){
             $info=[
                 'openid'=>$openid,
                 'create_time'  => time(),
                 'msg_type'  => 'text',
                 'text'=>$data->Content,
             ];
+
             $res=DB::table('wx_image')->insert($info);
             if($Content=='最新商品'){
                 $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
@@ -154,5 +164,29 @@ class TestController extends Controller
         }
 
         return view('weixin.user',$data);
+    }
+
+    //生成带参数的二维码
+    public function scene(){
+        $access_token=getWxAccessToken();
+        $url1='https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.$access_token;
+        $info=[
+            'expire_seconds'=>604800,
+            'action_name'=>'QR_SCENE',
+            'action_info'=>[
+                'scene'=>[
+                    'scene_id'=>4610
+                ]
+            ]
+        ];
+        $json_arr=json_encode($info,JSON_UNESCAPED_UNICODE);
+
+        $client=new Client();
+        $response=$client->request('POST',$url1,[
+           'body'=>$json_arr
+        ]);
+        $ticket=json_decode($response->getBody(),true);
+        $url2='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket['ticket'];
+        echo $url2;
     }
 }
