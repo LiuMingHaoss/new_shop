@@ -85,8 +85,8 @@
                     <td>商品价格</td>
                 </tr>
                 <tr>
-                    <td>{{$goodsInfo->goods_name}}</td>
-                    <td>{{$goodsInfo->goods_price}}</td>
+                    <td>{{$goodsInfo['goods_name']}}</td>
+                    <td>{{$goodsInfo['goods_price']}}</td>
                 </tr>
             </table>
         </div>
@@ -109,7 +109,7 @@
                 title: '活动了解一下', // 分享标题
                 desc: '活动活动活动', // 分享描述
                 link: 'http://1809liuminghao.comcto.com/weixin/goods', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                imgUrl: 'http://1809liuminghao.comcto.com/goodsImg/'{{$goodsInfo->goods_img}}, // 分享图标
+                imgUrl: 'http://1809liuminghao.comcto.com/goodsImg/'{{$goodsInfo['goods_img']}}, // 分享图标
                 success: function () {
                     // 设置成功
                 }

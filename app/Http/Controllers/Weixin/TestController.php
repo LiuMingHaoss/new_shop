@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Psr7\Uri;
 use App\Model\Wxscene;
+use App\Model\Goods;
 class TestController extends Controller
 {
     //微信推送
@@ -132,7 +133,7 @@ class TestController extends Controller
     //商品详情
     public function goodsdesc(){
         $goods_id=$_GET['goods_id'];
-        $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first();
+        $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first()->toArray();
 
         //计算签名
         $nonceStr=Str::random(10);
@@ -212,5 +213,6 @@ class TestController extends Controller
         $ticket=json_decode($response->getBody(),true);
         $url2='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket['ticket'];
         echo $url2;
+
     }
 }
