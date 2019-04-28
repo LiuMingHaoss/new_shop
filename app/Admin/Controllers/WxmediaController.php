@@ -91,9 +91,9 @@ class WxmediaController extends Controller
         $json =  $response->getBody();
         $media=json_decode($json,true);
         $info=[
-            'type'=>$media->type,
-            'media_id'=>$media->media_id,
-            'create_time'=>$media->created_at
+            'type'=>$media['type'],
+            'media_id'=>$media['media_id'],
+            'create_time'=>$media['created_at']
         ];
         $res=DB::table('wx_media')->insert($info);
         if($res){
