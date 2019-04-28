@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Psr7\Uri;
 use App\Model\Wxscene;
 use App\Model\Goods;
+use App\Model\ShopGoods;
 class TestController extends Controller
 {
     //微信推送
@@ -133,7 +134,7 @@ class TestController extends Controller
     //商品详情
     public function goodsdesc(){
         $goods_id=$_GET['goods_id'];
-        $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first()->toArray();
+        $goodsInfo=ShopGoods::where('goods_id',$goods_id)->first()->toArray();
 
         //计算签名
         $nonceStr=Str::random(10);
