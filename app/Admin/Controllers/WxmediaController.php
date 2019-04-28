@@ -10,6 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class WxmediaController extends Controller
 {
@@ -72,7 +73,7 @@ class WxmediaController extends Controller
             ->description('description')
             ->body(view('admin.weixin.addimg'));
     }
-    public function createdo(){
+    public function createdo(Request $request){
         $img_name=$_FILES['media']['name'];
         $access_token=getWxAccessToken();
         $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token='.$access_token.'&type=image';
@@ -88,7 +89,7 @@ class WxmediaController extends Controller
         ]);
 
         $json =  $response->getBody();
-        $media=json_decode($json);
+        $media=json_decode($json,true);
         $info=[
             'type'=>$media->type,
             'media_id'=>$media->media_id,
@@ -98,6 +99,20 @@ class WxmediaController extends Controller
         if($res){
             return redirect('/admin/msg');
         }
+    }
+
+    //文件上传
+    public function uplode(Request $request,$fileName){
+        if ($request->hasFile($fileName) && $request->file($fileName)->isValid()) {
+            $photo = $request->file($fileName);
+            $extension = $photo->extension();
+            //$store_result = $photo->store('photo');
+            $uploade='uploade/';
+            $store_result = $photo->store($uploade.date('Ymd'));
+            $store_result = trim($store_result,$uploade);
+            return $store_result;
+        }
+        exit('未获取到上传文件或上传过程出错');
     }
     /**
      * Make a grid builder.

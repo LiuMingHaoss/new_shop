@@ -167,6 +167,9 @@ class UserController extends Controller
         $response=$client->request('POST',$url,[
             'body'=>$msg_json,
         ]);
-        echo 1;
+        $res=json_decode($response->getBody(),true);
+//        if($res['errcode']==0){
+            echo 1;
+//        }
     }
 }
