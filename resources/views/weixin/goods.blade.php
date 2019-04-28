@@ -86,7 +86,7 @@
                 </tr>
                 <tr>
                     <td>{{$goodsInfo['goods_name']}}</td>
-                    <td>{{$goodsInfo['goods_price']}}</td>
+                    <td>{{$goodsInfo['self_price']}}</td>
                 </tr>
             </table>
         </div>
