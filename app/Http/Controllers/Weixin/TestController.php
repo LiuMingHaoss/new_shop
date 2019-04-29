@@ -118,8 +118,8 @@ class TestController extends Controller
                         </xml>';
                 }
             }else{
-//                $where[]=['goods_name','like',"%$Content%"];
-                $goods=ShopGoods::where('goods_name',$Content)->first();
+                $where[]=['goods_name','like',"%$Content%"];
+                $goods=ShopGoods::where($where)->first();
                 if($goods!=null){
                     $goods=$goods->toArray();
                     $img_url='http://1809liuminghao.comcto.com/goodsImg/'.$goods['goods_img'];
