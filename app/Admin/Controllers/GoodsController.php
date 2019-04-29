@@ -84,7 +84,7 @@ class GoodsController extends Controller
         $grid->id('Id');
         $grid->goods_name('商品名称');
         $grid->goods_price('商品价格');
-        //$grid->last_time('Last time');
+        $grid->logo('图片')->image();
 
         return $grid;
     }
@@ -119,6 +119,8 @@ class GoodsController extends Controller
         $form->text('goods_name', 'Goods name');
         $form->number('goods_price', 'Goods price');
         $form->number('last_time', 'Last time');
+        $form->file('logo', 'Logo');
+
 
         return $form;
     }

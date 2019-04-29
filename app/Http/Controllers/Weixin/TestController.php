@@ -86,7 +86,7 @@ class TestController extends Controller
                         </xml>';
             }
 
-        }else if($data->MsgType=='text'){
+        }else if($data->MsgType=='text'){       //用户发送文字消息
 //            $info=[
 //                'openid'=>$openid,
 //                'create_time'  => time(),
@@ -118,6 +118,9 @@ class TestController extends Controller
                         </xml>';
                 }
             }else{
+
+                //搜索商品
+
                 $where[]=['goods_name','like',"%$Content%"];
                 $goods=ShopGoods::where($where)->first();
                 if($goods!=null){
@@ -241,6 +244,7 @@ class TestController extends Controller
             $data=[
                 'data'=>'欢迎回来,'.$userInfo['nickname'],
             ];
+
         }else{
             $user_info=[
                 'openid'=>$userInfo['openid'],
@@ -283,5 +287,26 @@ class TestController extends Controller
         $url2='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket['ticket'];
         echo $url2;
 
+    }
+
+    //自定义菜单
+    public function menu(){
+        $access_token=getWxAccessToken();
+        $url='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$access_token;
+        $client = new Client();
+        $arr=[
+          "button"=>[
+              [
+                  "type"=>"view",
+                  "name"=>"最新福利",
+                  "url"=>"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fweixin%2Fwxweb&response_type=code&scope=snsapi_userinfo &state=STATE#wechat_redirect"
+              ]
+          ]
+        ];
+        $json_arr=json_encode($arr,JSON_UNESCAPED_UNICODE);
+        $response = $client->request('POST',$url,[
+           'body'=>$json_arr
+        ]);
+        echo $response->getBody();
     }
 }

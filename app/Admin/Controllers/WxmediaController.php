@@ -12,6 +12,8 @@ use Encore\Admin\Show;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Session\Storage;
 class WxmediaController extends Controller
 {
     use HasResourceActions;
@@ -74,7 +76,13 @@ class WxmediaController extends Controller
             ->body(view('admin.weixin.addimg'));
     }
     public function createdo(Request $request){
-        $img_name=$_FILES['media']['name'];
+
+        $file=$request->file('media');
+        $ext=$file->getClientOriginalExtension();
+        $save_path='upload';
+        //生成文件名
+        $file_name=date('ymd').Str::random(5).'.'.$ext;
+        $rs=$file->storeAs($save_path,$file_name);
         $access_token=getWxAccessToken();
         $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token='.$access_token.'&type=image';
         $client=new Client();
@@ -83,7 +91,7 @@ class WxmediaController extends Controller
             'multipart' => [
                 [
                     'name' => 'media',
-                    'contents' => fopen('images/'.$img_name, 'r'),
+                    'contents' => fopen($rs, 'r'),
                 ]
             ]
         ]);
@@ -101,19 +109,6 @@ class WxmediaController extends Controller
         }
     }
 
-    //文件上传
-    public function uplode(Request $request,$fileName){
-        if ($request->hasFile($fileName) && $request->file($fileName)->isValid()) {
-            $photo = $request->file($fileName);
-            $extension = $photo->extension();
-            //$store_result = $photo->store('photo');
-            $uploade='uploade/';
-            $store_result = $photo->store($uploade.date('Ymd'));
-            $store_result = trim($store_result,$uploade);
-            return $store_result;
-        }
-        exit('未获取到上传文件或上传过程出错');
-    }
     /**
      * Make a grid builder.
      *

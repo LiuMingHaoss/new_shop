@@ -58,6 +58,10 @@ Route::get('/weixin/wxweb','Weixin\TestController@wxweb');  //授权回调地址
 //生成带参数的二维码
 Route::get('/scene','Weixin\TestController@scene');
 
+//自定义菜单
+Route::get('/menu','Weixin\TestController@menu');
+
+
 
 
 
