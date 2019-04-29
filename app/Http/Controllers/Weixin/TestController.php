@@ -87,14 +87,14 @@ class TestController extends Controller
             }
 
         }else if($data->MsgType=='text'){
-            $info=[
-                'openid'=>$openid,
-                'create_time'  => time(),
-                'msg_type'  => 'text',
-                'text'=>$data->Content,
-            ];
+//            $info=[
+//                'openid'=>$openid,
+//                'create_time'  => time(),
+//                'msg_type'  => 'text',
+//                'text'=>$data->Content,
+//            ];
 
-            $res=DB::table('wx_image')->insert($info);
+//            $res=DB::table('wx_image')->insert($info);
             if($Content=='最新商品'){
                 $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
                 foreach($goodsInfo as $k=>$v){
@@ -117,6 +117,52 @@ class TestController extends Controller
                           </Articles>
                         </xml>';
                 }
+            }else{
+//                $where[]=['goods_name','like',"%$Content%"];
+                $goods=ShopGoods::where('goods_name',$Content)->first();
+                if($goods!=null){
+                    $goods=$goods->toArray();
+                    $img_url='http://1809liuminghao.comcto.com/goodsImg/'.$goods['goods_img'];
+                    $desc_url='http://1809liuminghao.comcto.com/weixin/goods?goods_id='.$goods['goods_id'];
+                    echo '
+                        <xml>
+                          <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                          <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                          <CreateTime>'.time().'</CreateTime>
+                          <MsgType><![CDATA[news]]></MsgType>
+                          <ArticleCount>1</ArticleCount>
+                          <Articles>
+                            <item>
+                              <Title><![CDATA['.$goods['goods_name'].']]></Title>
+                              <Description><![CDATA['.$goods['goods_desc'].']]></Description>
+                              <PicUrl><![CDATA['.$img_url.']]></PicUrl>
+                              <Url><![CDATA['.$desc_url.']]></Url>
+                            </item>
+                          </Articles>
+                        </xml>';
+                }else{
+                    $rand_num=rand(9,36);
+                    $goodss=ShopGoods::where('goods_id',$rand_num)->first()->toArray();
+                    $img_url='http://1809liuminghao.comcto.com/goodsImg/'.$goodss['goods_img'];
+                    $desc_url='http://1809liuminghao.comcto.com/weixin/goods?goods_id='.$goodss['goods_id'];
+                    echo '
+                        <xml>
+                          <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                          <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                          <CreateTime>'.time().'</CreateTime>
+                          <MsgType><![CDATA[news]]></MsgType>
+                          <ArticleCount>1</ArticleCount>
+                          <Articles>
+                            <item>
+                              <Title><![CDATA['.'无此商品，为您推荐：'.$goodss['goods_name'].']]></Title>
+                              <Description><![CDATA['.$goodss['goods_desc'].']]></Description>
+                              <PicUrl><![CDATA['.$img_url.']]></PicUrl>
+                              <Url><![CDATA['.$desc_url.']]></Url>
+                            </item>
+                          </Articles>
+                        </xml>';
+                }
+
             }
 
 
