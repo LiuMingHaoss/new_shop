@@ -14,9 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/aa', function () {
-    echo urlencode('http://1809liuminghao.comcto.com/weixin/wxweb');
-});
+
 
 Auth::routes();
 
@@ -57,8 +55,6 @@ Route::post('/index','Weixin\TestController@wxEvent');
 Route::get('/weixin/goods','Weixin\TestController@goodsdesc');
 
 Route::get('/weixin/wxweb','Weixin\TestController@wxweb');  //授权回调地址
-Route::get('/weixin/wxweb_code','Weixin\TestController@wxwebdo');  //授权回调地址
-
 
 //生成带参数的二维码
 Route::get('/scene','Weixin\TestController@scene');

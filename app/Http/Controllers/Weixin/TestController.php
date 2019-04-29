@@ -310,7 +310,5 @@ class TestController extends Controller
         ]);
         echo $response->getBody();
     }
-    public function wxwebdo(){
-        return view('weixin.wxweb');
-    }
+    
 }
