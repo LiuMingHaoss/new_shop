@@ -61,6 +61,8 @@ Route::get('/scene','Weixin\TestController@scene');
 
 //自定义菜单
 Route::get('/menu','Weixin\TestController@menu');
+//签到
+Route::get('/sign','Weixin\TestController@sign');
 
 
 

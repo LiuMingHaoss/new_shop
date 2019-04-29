@@ -13,6 +13,7 @@ use GuzzleHttp\Psr7\Uri;
 use App\Model\Wxscene;
 use App\Model\Goods;
 use App\Model\ShopGoods;
+use Illuminate\Support\Facades\Redis;
 class TestController extends Controller
 {
     //微信推送
@@ -300,7 +301,12 @@ class TestController extends Controller
                   "type"=>"view",
                   "name"=>"最新福利",
                   "url"=>"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fweixin%2Fwxweb&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
-              ]
+              ],
+              [
+              "type"=>"view",
+              "name"=>"签到",
+              "url"=>"http://1809liuminghao.comcto.com/sign"
+          ]
           ]
         ];
         $json_arr=json_encode($arr,JSON_UNESCAPED_UNICODE);
@@ -309,5 +315,8 @@ class TestController extends Controller
         ]);
         echo $response->getBody();
     }
-
+    //签到
+    public function sign(){
+        
+    }
 }
