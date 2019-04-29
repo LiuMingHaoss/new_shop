@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fweixin%2Fwxweb&response_type=code&scope=snsapi_userinfo &state=STATE#wechat_redirect">微信授权</a>
+<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http://1809liuminghao.comcto.com/weixin/wxweb&response_type=code&scope=snsapi_userinfo &state=STATE#wechat_redirect">微信授权</a>
 </body>
 </html>

@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/aa', function () {
+    echo urlencode('http://1809liuminghao.comcto.com/weixin/wxweb');
+});
 
 Auth::routes();
 
