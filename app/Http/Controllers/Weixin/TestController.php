@@ -311,7 +311,6 @@ class TestController extends Controller
         echo $response->getBody();
     }
     public function wxwebdo(){
-        $url=file_get_contents('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fweixin%2Fwxweb&response_type=code&scope=snsapi_userinfo &state=STATE#wechat_redirect');
-        var_dump($url);die;
+        return view('weixin.wxweb');
     }
 }
