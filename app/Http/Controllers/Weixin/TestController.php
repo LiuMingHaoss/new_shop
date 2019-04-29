@@ -300,7 +300,7 @@ class TestController extends Controller
               [
                   "type"=>"view",
                   "name"=>"最新福利",
-                  "url"=>"http://1809liuminghao.comcto.com/weixin/wxweb_code"
+                  "url"=>"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fweixin%2Fwxweb&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
               ]
           ]
         ];
