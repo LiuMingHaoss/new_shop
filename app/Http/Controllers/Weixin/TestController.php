@@ -232,7 +232,7 @@ class TestController extends Controller
 
     //微信授权回调
     public function wxweb(){
-        $url=file_get_contents('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fweixin%2Fwxweb&response_type=code&scope=snsapi_userinfo &state=STATE#wechat_redirect');
+
         $code=$url['code'];
         $url1='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET').'&code='.$code.'&grant_type=authorization_code';
         $arr=json_decode(file_get_contents($url1),true);
@@ -300,7 +300,7 @@ class TestController extends Controller
               [
                   "type"=>"view",
                   "name"=>"最新福利",
-                  "url"=>"http://1809liuminghao.comcto.com/weixin/wxweb"
+                  "url"=>"http://1809liuminghao.comcto.com/weixin/wxweb_code"
               ]
           ]
         ];
@@ -309,5 +309,9 @@ class TestController extends Controller
            'body'=>$json_arr
         ]);
         echo $response->getBody();
+    }
+    public function wxwebdo(){
+        $url=file_get_contents('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fweixin%2Fwxweb&response_type=code&scope=snsapi_userinfo &state=STATE#wechat_redirect');
+        var_dump($url);die;
     }
 }
