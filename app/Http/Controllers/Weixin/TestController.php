@@ -299,7 +299,7 @@ class TestController extends Controller
               [
                   "type"=>"view",
                   "name"=>"最新福利",
-                  "url"=>"/weixin/wxweb"
+                  "url"=>"http://1809liuminghao.comcto.com/weixin/wxweb"
               ]
           ]
         ];
