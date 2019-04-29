@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::get('/a', function () {
+    echo urlencode("http://1809liuminghao.comcto.com/sign");
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

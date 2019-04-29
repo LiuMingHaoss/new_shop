@@ -305,7 +305,7 @@ class TestController extends Controller
               [
               "type"=>"view",
               "name"=>"签到",
-              "url"=>"http://1809liuminghao.comcto.com/sign"
+              "url"=>"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfb5d95e795f0a9d3&redirect_uri=http%3A%2F%2F1809liuminghao.comcto.com%2Fsign&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
           ]
           ]
         ];
@@ -317,9 +317,23 @@ class TestController extends Controller
     }
     //签到
     public function sign(){
-        $content=file_get_contents('php://input');
-        $data=simplexml_load_string($content);
-        $openid=$data->FromUserName;    //用户openid
-        echo $openid;
+        $code=$_GET['code'];
+        $url1='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET').'&code='.$code.'&grant_type=authorization_code';
+        $arr=json_decode(file_get_contents($url1),true);
+        $url2='https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
+        $userInfo=json_decode(file_get_contents($url2),true);
+        $users=User::where('openid',$userInfo['openid'])->first();
+        if($users){
+            echo '用户已存在';
+            echo '<hr>';
+        }
+
+        //记录签到
+        echo "<h1>"签到成功,.$userInfo['nickname']"</h1>";
+        $key="wx_sign:".$userInfo['openid'];
+        Redis::LPush($key,date('Y-m-d H:i:s'));
+        $r=Redis::LRange($key,0,-1);
+        echo '<pre>';print_r($r);echo '</pre>';
+
     }
 }
