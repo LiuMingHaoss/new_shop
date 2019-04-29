@@ -317,6 +317,9 @@ class TestController extends Controller
     }
     //签到
     public function sign(){
-        
+        $content=file_get_contents('php://input');
+        $data=simplexml_load_string($content);
+        $openid=$data->FromUserName;    //用户openid
+        echo $openid;
     }
 }
