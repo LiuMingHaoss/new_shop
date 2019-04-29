@@ -241,7 +241,7 @@ class TestController extends Controller
 
         $users=User::where('openid',$userInfo['openid'])->first();
         if($users){
-            header('Refresh:3;url=/orderlist');
+            header('Refresh:3;url=/goods_desc/3');
                 echo '欢迎回来,'.$userInfo['nickname'].'  正在跳转福利页面';
 
 
