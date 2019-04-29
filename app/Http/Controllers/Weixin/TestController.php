@@ -329,7 +329,7 @@ class TestController extends Controller
         }
 
         //记录签到
-        echo "<h1>"签到成功,.$userInfo['nickname']"</h1>";
+        echo "<h1>签到成功:".$userInfo['nickname']"</h1>";
         $key="wx_sign:".$userInfo['openid'];
         Redis::LPush($key,date('Y-m-d H:i:s'));
         $r=Redis::LRange($key,0,-1);
