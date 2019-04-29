@@ -232,7 +232,6 @@ class TestController extends Controller
 
     //微信授权回调
     public function wxweb(){
-
         $code=$_GET['code'];
         $url1='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET').'&code='.$code.'&grant_type=authorization_code';
         $arr=json_decode(file_get_contents($url1),true);
@@ -242,9 +241,9 @@ class TestController extends Controller
 
         $users=User::where('openid',$userInfo['openid'])->first();
         if($users){
-            $data=[
-                'data'=>'欢迎回来,'.$userInfo['nickname'],
-            ];
+            header('Refresh:3;url=/orderlist');
+                echo '欢迎回来,'.$userInfo['nickname'].'  正在跳转福利页面';
+
 
         }else{
             $user_info=[
@@ -257,12 +256,12 @@ class TestController extends Controller
                 'create_time'=>time(),
             ];
             $res=User::insertGetId($user_info);
-            $data=[
-                'data'=>'欢迎你,'.$userInfo['nickname'],
-            ];
+            header('Refresh:3;url=/goods_desc/3');
+                echo '欢迎你,'.$userInfo['nickname'].' 正在跳转福利页面';
+
         }
 
-        return view('weixin.user',$data);
+//        return view('weixin.user',$data);
     }
 
     //生成带参数的二维码
@@ -310,5 +309,5 @@ class TestController extends Controller
         ]);
         echo $response->getBody();
     }
-    
+
 }
