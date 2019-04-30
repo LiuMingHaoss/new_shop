@@ -315,25 +315,41 @@ class TestController extends Controller
         ]);
         echo $response->getBody();
     }
-    //签到
+
+    //考试
     public function sign(){
         $code=$_GET['code'];
         $url1='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET').'&code='.$code.'&grant_type=authorization_code';
         $arr=json_decode(file_get_contents($url1),true);
-        $url2='https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
+        $access_token=$arr['access_token'];
+        $url2='https://api.weixin.qq.com/sns/userinfo?access_token='.$access_token.'&openid='.$arr['openid'].'&lang=zh_CN';
         $userInfo=json_decode(file_get_contents($url2),true);
-        $users=User::where('openid',$userInfo['openid'])->first();
-        if($users){
-            echo '用户已存在';
-            echo '<hr>';
-        }
+        print_r($userInfo);
+    }
 
-        //记录签到
-        echo "<h1>签到成功:".$userInfo['nickname']."</h1>";
-        $key="wx_sign:".$userInfo['openid'];
-        Redis::LPush($key,date('Y-m-d H:i:s'));
-        $r=Redis::LRange($key,0,-1);
-        echo '<pre>';print_r($r);echo '</pre>';
-
+    //考试
+    public function tag(){
+        $access_token=getWxAccessToken();
+        $url='https://api.weixin.qq.com/cgi-bin/tags/create?access_token='.$access_token;
+        $client=new Client;
+        $response=$client->request('POST',$url,[
+            'body'=>'{   "tag" : {     "name" : "1809b"//php   } }'
+        ]);
+        echo $response->getBody();
+    }
+    //标签
+    public function tagdo(){
+        $access_token=getWxAccessToken();
+        $url='https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token='.$access_token;
+        $client=new Client;
+        $response=$client->request('POST',$url,[
+            'body'=>'{   
+                        "openid_list" : [//粉丝列表    
+                        "og1Jd1HtDM0K9NdrNBTJB1cbGT5s",    
+                        "og1Jd1KlcDOxObfJuCnzCe5-CZ68"   ],   
+                        "tagid" : 100
+                    }'
+        ]);
+        echo $response->getBody();
     }
 }

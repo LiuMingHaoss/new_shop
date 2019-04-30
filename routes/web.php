@@ -66,6 +66,12 @@ Route::get('/menu','Weixin\TestController@menu');
 //签到
 Route::get('/sign','Weixin\TestController@sign');
 
+//用户标签
+Route::get('/tag','Weixin\TestController@tag');
+Route::get('/tagdo','Weixin\TestController@tagdo');
+
+
+
 
 
 
